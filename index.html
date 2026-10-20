@@ -1,0 +1,521 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>张骏豪 Anax — Portfolio</title>
+<style>
+:root {
+--bg: #FBFBF9;
+--ink: #1A1A1A;
+--muted: #6E6E6A;
+--line: #E7E7E2;
+--green: #1E4D3B; /* 墨绿 */
+--navy: #1E3A5F; /* 深蓝 */
+--card: #FFFFFF;
+}
+* { margin: 0; padding: 0; box-sizing: border-box;}
+html { scroll-behavior: smooth;}
+body {
+background: var(--bg);
+color: var(--ink);
+font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+line-height: 1.8;
+-webkit-font-smoothing: antialiased;
+}
+.en {
+font-family: Georgia, "Times New Roman", serif;
+letter-spacing: 0.04em;
+}
+.wrap { max-width: 1080px; margin: 0 auto; padding: 0 32px;}
+
+/* ---------- 导航 ---------- */
+nav {
+position: fixed; top: 0; left: 0; right: 0;
+background: rgba(251,251,249,0.92);
+backdrop-filter: blur(8px);
+border-bottom: 1px solid var(--line);
+z-index: 100;
+}
+nav .wrap {
+display: flex; align-items: center; justify-content: space-between;
+height: 64px;
+}
+.logo { font-weight: 700; font-size: 18px; letter-spacing: 0.08em;}
+.logo .en { color: var(--green); font-weight: 400; font-size: 14px; margin-left: 8px;}
+.links { display: flex; gap: 32px;}
+.links a {
+text-decoration: none; color: var(--muted); font-size: 14px;
+transition: color 0.2s;
+}
+.links a:hover { color: var(--ink);}
+.menu-btn { display: none; background: none; border: none; font-size: 22px; cursor: pointer; color: var(--ink);}
+
+/* ---------- 通用区块 ---------- */
+section { padding: 120px 0;}
+.kicker {
+font-size: 13px; letter-spacing: 0.28em; color: var(--green);
+margin-bottom: 24px; font-weight: 600;
+}
+h2.sec-title { font-size: 36px; font-weight: 700; letter-spacing: 0.02em; margin-bottom: 16px;}
+.sec-sub { color: var(--muted); font-size: 16px; max-width: 640px; margin-bottom: 64px;}
+
+/* ---------- Hero ---------- */
+#hero { padding: 190px 0 110px;}
+#hero .eyebrow {
+font-size: 14px; letter-spacing: 0.3em; color: var(--muted); margin-bottom: 28px;
+}
+#hero h1 {
+font-size: clamp(44px, 7vw, 84px);
+font-weight: 800; line-height: 1.25; letter-spacing: 0.04em;
+margin-bottom: 12px;
+}
+#hero h1 .en { font-weight: 400; color: var(--green);}
+#hero .role {
+font-size: clamp(18px, 2.6vw, 26px); color: var(--muted); font-weight: 400;
+margin-bottom: 40px; max-width: 720px;
+}
+.cta-row { display: flex; gap: 16px; flex-wrap: wrap; margin-bottom: 72px;}
+.btn {
+display: inline-block; text-decoration: none; font-size: 15px;
+padding: 14px 36px; border-radius: 2px; letter-spacing: 0.06em;
+transition: background 0.2s, color 0.2s;
+}
+.btn-primary { background: var(--green); color: #fff;}
+.btn-primary:hover { background: #16382B;}
+.btn-ghost { border: 1px solid var(--line); color: var(--ink); background: transparent;}
+.btn-ghost:hover { border-color: var(--ink);}
+/* 3D 视觉区：Three.js 挂载点 */
+#hero-3d {
+position: relative;
+height: 420px;
+border-radius: 6px;
+overflow: hidden;
+background:
+radial-gradient(110% 80% at 50% 0%, #0d1b36 0%, rgba(13,27,54,0) 60%),
+radial-gradient(90% 70% at 85% 90%, #0a2e28 0%, rgba(10,46,40,0) 55%),
+linear-gradient(180deg, #070d1a 0%, #05080f 100%);
+}
+#hero-3d canvas {
+position: absolute; inset: 0;
+width: 100%; height: 100%;
+display: block;
+}
+
+/* ---------- 关于 ---------- */
+#about { background: var(--card); border-top: 1px solid var(--line); border-bottom: 1px solid var(--line);}
+.about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 72px; align-items: start;}
+.about-text p { margin-bottom: 20px; color: #33332F; font-size: 17px;}
+.fact-list { list-style: none; border-top: 1px solid var(--line);}
+.fact-list li {
+display: flex; justify-content: space-between; gap: 24px;
+padding: 18px 0; border-bottom: 1px solid var(--line); font-size: 15px;
+}
+.fact-list .k { color: var(--muted); white-space: nowrap;}
+.fact-list .v { text-align: right; font-weight: 500;}
+
+/* ---------- 经历时间线 ---------- */
+.timeline { position: relative; margin-left: 8px; padding-left: 40px;}
+.timeline::before {
+content: ""; position: absolute; left: 0; top: 8px; bottom: 8px;
+width: 1px; background: var(--line);
+}
+.t-item { position: relative; padding-bottom: 56px;}
+.t-item:last-child { padding-bottom: 0;}
+.t-item::before {
+content: ""; position: absolute; left: -45px; top: 8px;
+width: 9px; height: 9px; border-radius: 50%;
+background: var(--bg); border: 2px solid var(--green);
+}
+.t-item.current::before { background: var(--green);}
+.t-date {
+font-size: 13px; letter-spacing: 0.14em; color: var(--green);
+font-weight: 600; margin-bottom: 8px;
+}
+.t-title { font-size: 21px; font-weight: 700; margin-bottom: 4px;}
+.t-org { font-size: 15px; color: var(--muted); margin-bottom: 12px;}
+.t-desc { font-size: 15px; color: #3A3A36; max-width: 720px;}
+
+/* ---------- 技能 ---------- */
+#skills { background: var(--card); border-top: 1px solid var(--line); border-bottom: 1px solid var(--line);}
+.skill-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px;}
+.skill-card {
+border: 1px solid var(--line); border-radius: 4px;
+padding: 36px 32px; background: var(--bg);
+}
+.skill-card .num {
+font-family: Georgia, serif; font-size: 15px; color: var(--green);
+letter-spacing: 0.1em; margin-bottom: 16px;
+}
+.skill-card h3 { font-size: 19px; font-weight: 700; margin-bottom: 12px;}
+.skill-card p { font-size: 14.5px; color: var(--muted);}
+
+/* ---------- 联系 ---------- */
+#contact { text-align: center;}
+#contact h2.sec-title { margin-bottom: 20px;}
+#contact .sec-sub { margin: 0 auto 48px;}
+.contact-links { display: flex; justify-content: center; gap: 16px; flex-wrap: wrap;}
+.contact-links a {
+text-decoration: none; color: var(--navy); font-size: 15px;
+border: 1px solid var(--line); border-radius: 999px;
+padding: 12px 32px; background: var(--card);
+transition: border-color 0.2s;
+}
+.contact-links a:hover { border-color: var(--navy);}
+
+footer {
+border-top: 1px solid var(--line); padding: 40px 0;
+text-align: center; color: var(--muted); font-size: 13px; letter-spacing: 0.08em;
+}
+
+/* ---------- 动效（克制） ---------- */
+.reveal { opacity: 0; transform: translateY(24px); transition: opacity 0.7s ease, transform 0.7s ease;}
+.reveal.visible { opacity: 1; transform: none;}
+
+/* ---------- 响应式 ---------- */
+@media (max-width: 860px) {
+.links {
+display: none; position: absolute; top: 64px; left: 0; right: 0;
+flex-direction: column; gap: 0; background: var(--bg);
+border-bottom: 1px solid var(--line);
+}
+.links.open { display: flex;}
+.links a { padding: 16px 32px; border-top: 1px solid var(--line); font-size: 15px;}
+.menu-btn { display: block;}
+section { padding: 84px 0;}
+#hero { padding: 140px 0 80px;}
+.about-grid { grid-template-columns: 1fr; gap: 48px;}
+.skill-grid { grid-template-columns: 1fr;}
+#hero-3d { height: 300px;}
+h2.sec-title { font-size: 28px;}
+.wrap { padding: 0 22px;}
+.fact-list li { font-size: 14px;}
+}
+</style>
+</head>
+<body>
+
+<nav>
+<div class="wrap">
+<div class="logo">张骏豪<span class="en">ANAX</span></div>
+<div class="links" id="navLinks">
+<a href="#about">关于</a>
+<a href="#experience">经历</a>
+<a href="#skills">技能</a>
+<a href="#contact">联系</a>
+</div>
+<button class="menu-btn" id="menuBtn" aria-label="菜单">☰</button>
+</div>
+</nav>
+
+<!-- ================= Hero ================= -->
+<section id="hero">
+<div class="wrap">
+<div class="eyebrow reveal"><span class="en">PORTFOLIO</span> · 个人作品集</div>
+<h1 class="reveal">张骏豪 <span class="en">Anax</span></h1>
+<p class="role reveal">工程师的底子，项目经理的打法。<br><span class="en">Built like an engineer. Run like a PM.</span></p>
+<div class="cta-row reveal">
+<a class="btn btn-primary" href="#experience">查看经历</a>
+<a class="btn btn-ghost" href="#contact">联系我</a>
+</div>
+<div id="hero-3d" class="reveal"></div>
+</div>
+</section>
+
+<!-- ================= 关于 ================= -->
+<section id="about">
+<div class="wrap">
+<div class="kicker reveal"><span class="en">ABOUT</span> · 关于</div>
+<h2 class="sec-title reveal">关于我</h2>
+<div class="about-grid">
+<div class="about-text reveal">
+<p>张骏豪（Anax），2002 年生，现居南通。沈阳工业大学工业智能专业 2025 届本科，现任安费诺南通 Automation Project Engineer，负责高速铜缆自动化项目，对接英伟达供应链。</p>
+<p>一年多三份工作，每一步都在往同一个方向走：用扎实的技术底座，做靠谱的项目管理。</p>
+</div>
+<ul class="fact-list reveal">
+<li><span class="k">姓名 <span class="en">Name</span></span><span class="v">张骏豪 <span class="en">Anax</span></span></li>
+<li><span class="k">现居 <span class="en">Location</span></span><span class="v">南通</span></li>
+<li><span class="k">职位 <span class="en">Title</span></span><span class="v"><span class="en">Automation Project Engineer</span></span></li>
+<li><span class="k">公司 <span class="en">Company</span></span><span class="v">安费诺南通 <span class="en">Amphenol</span></span></li>
+<li><span class="k">教育 <span class="en">Education</span></span><span class="v">沈阳工业大学 · 工业智能 <span class="en">2025</span></span></li>
+<li><span class="k">语言 <span class="en">Language</span></span><span class="v">中文 / <span class="en">English</span>（可做技术汇报）</span></li>
+</ul>
+</div>
+</div>
+</section>
+
+<!-- ================= 经历 ================= -->
+<section id="experience">
+<div class="wrap">
+<div class="kicker reveal"><span class="en">EXPERIENCE</span> · 经历</div>
+<h2 class="sec-title reveal">工作经历</h2>
+<p class="sec-sub reveal">从乙方到甲方，从执行到负责——每一段都在回答同一个问题：怎么把项目做成。</p>
+<div class="timeline">
+<div class="t-item current reveal">
+<div class="t-date"><span class="en">2026.09 — PRESENT</span></div>
+<div class="t-title">自动化项目工程师</div>
+<div class="t-org">安费诺南通 <span class="en">Amphenol</span> · 高速铜缆（英伟达供应链）</div>
+<div class="t-desc">外企甲方，产品是对接英伟达的高速铜缆。站在需求方管项目：从需求、选型、设计评审，一路跟到验收和量产爬坡。技术判断和项目推进，两手都要硬。</div>
+</div>
+<div class="t-item reveal">
+<div class="t-date"><span class="en">2026.05 — 2026.08</span></div>
+<div class="t-title">项目经理</div>
+<div class="t-org">猎奇 <span class="en">·</span> 光模块设备 · 独立带项目</div>
+<div class="t-desc">光模块设备公司，独立负责项目交付。三个月里第一次完整地为一个项目的成败负责，成长速度拉满。</div>
+</div>
+<div class="t-item reveal">
+<div class="t-date"><span class="en">2025.07 — 2026.05</span></div>
+<div class="t-title"><span class="en">EPM</span> 工程项目管理</div>
+<div class="t-org">立讯精密 <span class="en">Luxshare</span> · <span class="en">Apple</span> 供应链 <span class="en">NPI</span></div>
+<div class="t-desc">在 Apple 供应链做 EPM，跟过表带和手机壳的 NPI 项目。管排产、出货、物料，在高标准的交付体系里学会了什么叫按时交付。这是项目管理的第一课。</div>
+</div>
+<div class="t-item reveal">
+<div class="t-date"><span class="en">2021 — 2025</span></div>
+<div class="t-title">工业智能 本科</div>
+<div class="t-org">沈阳工业大学 <span class="en">Shenyang University of Technology</span></div>
+<div class="t-desc">沈阳工业大学工业智能专业，2025 年本科毕业。</div>
+</div>
+</div>
+</div>
+</section>
+
+<!-- ================= 技能 ================= -->
+<section id="skills">
+<div class="wrap">
+<div class="kicker reveal"><span class="en">SKILLS</span> · 技能</div>
+<h2 class="sec-title reveal">核心能力</h2>
+<p class="sec-sub reveal">安身立命的本事，一半技术，一半管理。</p>
+<div class="skill-grid">
+<div class="skill-card reveal">
+<div class="num"><span class="en">01</span></div>
+<h3>项目管理</h3>
+<p>从需求到量产的全链路推进——拆任务、盯进度、管风险，站在甲方视角把项目做成。</p>
+</div>
+<div class="skill-card reveal">
+<div class="num"><span class="en">02</span></div>
+<h3>自动化方案</h3>
+<p>高速铜缆产线自动化项目，设备选型、方案评审与落地跟进。</p>
+</div>
+<div class="skill-card reveal">
+<div class="num"><span class="en">03</span></div>
+<h3><span class="en">NPI</span> 新产品导入</h3>
+<p>在 Apple 供应链完整跟过 NPI，懂量产前每一道坎怎么过。</p>
+</div>
+<div class="skill-card reveal">
+<div class="num"><span class="en">04</span></div>
+<h3><span class="en">AI</span> 应用</h3>
+<p>重度 AI 使用者，用多智能体工作流把个人产出放大数倍。</p>
+</div>
+<div class="skill-card reveal">
+<div class="num"><span class="en">05</span></div>
+<h3>跨部门协作</h3>
+<p>甲方乙方都待过，知道怎么让不同立场的人朝同一个方向使劲。</p>
+</div>
+<div class="skill-card reveal">
+<div class="num"><span class="en">06</span></div>
+<h3>英语技术汇报</h3>
+<p>能用英语给客户讲技术方案、做项目汇报，NVIDIA 客户面前也讲过。</p>
+</div>
+</div>
+</div>
+</section>
+
+<!-- ================= 联系 ================= -->
+<section id="contact">
+<div class="wrap">
+<div class="kicker reveal"><span class="en">CONTACT</span> · 联系</div>
+<h2 class="sec-title reveal">如果你在找一个懂技术、能扛事的项目搭子，欢迎聊聊。</h2>
+<p class="sec-sub reveal"><span class="en">Let's build something real.</span></p>
+<div class="contact-links reveal">
+<a href="#"><span class="en">Email</span></a>
+<a href="#"><span class="en">LinkedIn</span></a>
+<a href="#"><span class="en">GitHub</span></a>
+</div>
+</div>
+</section>
+
+<footer>
+<div class="wrap">
+© 2026 张骏豪 <span class="en">ANAX</span> · <span class="en">Built like an engineer. Run like a PM.</span>
+</div>
+</footer>
+<script>
+// 移动端导航
+var menuBtn = document.getElementById('menuBtn');
+var navLinks = document.getElementById('navLinks');
+menuBtn.addEventListener('click', function () {
+navLinks.classList.toggle('open');
+});
+navLinks.addEventListener('click', function (e) {
+if (e.target.tagName === 'A') navLinks.classList.remove('open');
+});
+
+// 克制的滚动显现
+var io = new IntersectionObserver(function (entries) {
+entries.forEach(function (en) {
+if (en.isIntersecting) {
+en.target.classList.add('visible');
+io.unobserve(en.target);
+}
+});
+}, { threshold: 0.12});
+document.querySelectorAll('.reveal').forEach(function (el) { io.observe(el);});
+</script>
+
+<script type="module">
+/* Three.js hero 视觉：墨绿线框二十面体 × 380 粒子尘 × 鼠标视差（3D 建模师交付，总管集成） */
+let THREE = null;
+const CDNS = [
+'https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js',
+'https://unpkg.com/three@0.160.0/build/three.module.js'
+];
+for (const url of CDNS) {
+try { THREE = await import(url); break;}
+catch (err) { console.warn('[hero-3d] CDN 加载失败，尝试备用：', url);}
+}
+
+const COLORS = {
+line: 0x2fd6a3,
+lineInner: 0x1e8f6b,
+particleA: 0x5eead4,
+particleB: 0x6ea8ff
+};
+
+function initHero3D(containerId = 'hero-3d') {
+if (!THREE) { console.warn('[hero-3d] three.js 加载失败，页面仅显示静态底色'); return null;}
+const container = document.getElementById(containerId);
+if (!container) { console.warn('[hero-3d] 找不到挂载点 #' + containerId); return null;}
+
+const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+const renderer = new THREE.WebGLRenderer({ antialias:true, alpha:true});
+renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
+renderer.setClearColor(0x000000, 0);
+container.appendChild(renderer.domElement);
+
+const scene = new THREE.Scene();
+const camera = new THREE.PerspectiveCamera(45, 1, 0.1, 100);
+camera.position.set(0, 0, 6.2);
+
+const tilt = new THREE.Group();
+const world = new THREE.Group();
+tilt.add(world);
+scene.add(tilt);
+
+const outer = new THREE.LineSegments(
+new THREE.WireframeGeometry(new THREE.IcosahedronGeometry(1.75, 1)),
+new THREE.LineBasicMaterial({ color: COLORS.line, transparent:true, opacity:0.5})
+);
+const inner = new THREE.LineSegments(
+new THREE.WireframeGeometry(new THREE.IcosahedronGeometry(0.95, 0)),
+new THREE.LineBasicMaterial({ color: COLORS.lineInner, transparent:true, opacity:0.4})
+);
+world.add(outer, inner);
+
+const COUNT = 380;
+const positions = new Float32Array(COUNT * 3);
+const colors = new Float32Array(COUNT * 3);
+const cA = new THREE.Color(COLORS.particleA);
+const cB = new THREE.Color(COLORS.particleB);
+for (let i = 0; i < COUNT; i++) {
+const r = 2.9 + Math.random() * 2.8;
+const theta = Math.random() * Math.PI * 2;
+const phi = Math.acos(2 * Math.random() - 1);
+positions[i*3] = r * Math.sin(phi) * Math.cos(theta);
+positions[i*3+1] = r * Math.sin(phi) * Math.sin(theta) * 0.7;
+positions[i*3+2] = r * Math.cos(phi);
+const c = cA.clone().lerp(cB, Math.random() * 0.55).multiplyScalar(0.55 + Math.random() * 0.45);
+colors[i*3] = c.r; colors[i*3+1] = c.g; colors[i*3+2] = c.b;
+}
+const pGeo = new THREE.BufferGeometry();
+pGeo.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+pGeo.setAttribute('color', new THREE.BufferAttribute(colors, 3));
+const particles = new THREE.Points(pGeo, new THREE.PointsMaterial({
+size:0.035, vertexColors:true, transparent:true, opacity:0.75,
+sizeAttenuation:true, depthWrite:false
+}));
+scene.add(particles);
+
+function resize() {
+const w = container.clientWidth || 1;
+const h = container.clientHeight || 1;
+renderer.setSize(w, h, false);
+camera.aspect = w / h;
+camera.updateProjectionMatrix();
+}
+resize();
+window.addEventListener('resize', resize);
+
+const pointer = { x:0, y:0, tx:0, ty:0};
+function onPointerMove(e) {
+pointer.tx = (e.clientX / window.innerWidth) * 2 - 1;
+pointer.ty = (e.clientY / window.innerHeight) * 2 - 1;
+}
+window.addEventListener('pointermove', onPointerMove, { passive:true});
+
+let inView = true;
+const io = new IntersectionObserver((es) => { inView = es[0].isIntersecting;}, { threshold:0.02});
+io.observe(container);
+
+const clock = new THREE.Clock();
+let rafId = 0;
+let destroyed = false;
+
+function frame() {
+if (destroyed) return;
+rafId = requestAnimationFrame(frame);
+if (!inView || document.hidden) return;
+const dt = Math.min(clock.getDelta(), 0.05);
+const t = clock.elapsedTime;
+
+outer.rotation.y += dt * 0.12;
+outer.rotation.x = Math.sin(t * 0.12) * 0.18;
+inner.rotation.y -= dt * 0.2;
+inner.rotation.x += dt * 0.06;
+particles.rotation.y += dt * 0.02;
+world.position.y = Math.sin(t * 0.5) * 0.09;
+
+pointer.x += (pointer.tx - pointer.x) * 0.04;
+pointer.y += (pointer.ty - pointer.y) * 0.04;
+tilt.rotation.y = pointer.x * 0.28 + Math.sin(t * 0.3) * 0.05;
+tilt.rotation.x = pointer.y * 0.18 + Math.cos(t * 0.24) * 0.04;
+
+renderer.render(scene, camera);
+}
+
+if (reduceMotion) {
+renderer.render(scene, camera);
+} else {
+frame();
+}
+
+function destroy() {
+destroyed = true;
+cancelAnimationFrame(rafId);
+io.disconnect();
+window.removeEventListener('resize', resize);
+window.removeEventListener('pointermove', onPointerMove);
+scene.traverse((o) => {
+if (o.geometry) o.geometry.dispose();
+if (o.material) o.material.dispose();
+});
+renderer.dispose();
+if (renderer.domElement.parentNode === container) container.removeChild(renderer.domElement);
+}
+
+return { destroy};
+}
+
+window.initHero3D = initHero3D;
+
+if (document.getElementById('hero-3d')) {
+if (document.readyState === 'loading') {
+document.addEventListener('DOMContentLoaded', () => initHero3D('hero-3d'));
+} else {
+initHero3D('hero-3d');
+}
+}
+</script>
+
+</body>
+</html>
